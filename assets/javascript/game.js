@@ -1,25 +1,51 @@
+var losses = 0;
+var wins = 0;
+var previous = [];
+var guesses = 10;
+var choices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q,","r","s","t","u","v","w","x","y","z"];
+    var computerguesses = choices[Math.floor(Math.random() * choices.length)];
 
-var UserNumber = 10; // Prompt the user to pick a number between 1 and UserNumber.
-var counter = 0;
-var MaxTries = 5; //max number of times you can guess the random number
 
-//Promote User and ask them to pick a number between 1 & x
-var RandomNumber = Math.floor(Math.random() * UserNumber) + 1;
+var psychic = 
+"<p>" + "wins: " + wins + "</p>" +
+"<p>" + "losses: " + losses + "</p>" +
+"<p>" + "guesses left: " + guesses +
+"<p>" + "your guesses so far: " + previous + "</p>"
+console.log(psychic)
+document.getElementById("game").innerHTML = psychic
+function reset() {
+    computerguesses = choices[Math.floor(Math.random() * choices.length)];
+    
+    guesses = 10 
+    previous = []
+}
+document.onkeyup = function(event) {
+    var yourGuess = event.key;
+    console.log(computerguesses)
+    console.log(yourGuess)
+    if (computerguesses === yourGuess) {
+        wins++;
+        reset ()
+        alert("yah!!")
 
-//Check to see if number is correct
-while (Attempts != RandomNumber) {
-    var Attempts = prompt("Please pick a number between 1 and" + UserNumber);
-counter += 1;
+        }
 
-if (counter > MaxTries){
+ else {
+    guesses--;
+    previous.push(yourGuess);
 
-document.write("You have no more tries left. Please press f5 to play again");
-break
-    }
-} 
+}
 
-//If number is wrong prompt the User again and ask them to try to guess again. Repeat until user gets correct number of until they have used up all of their attempts.
+if (guesses <0) {
+    alert("nope!")
+    losses ++
+    reset ()
+}
 
-//If user guesses the corect number, then tell them what the number is, how many attempts it took them to get the right  number, and thank them for playing.
-
-//Program complete.
+ psychic = 
+"<p>" + "wins: " + wins + "</p>" +
+"<p>" + "losses: " + losses + "</p>" +
+"<p>" + "guessesleft: " + guesses + "</p>" +
+"<p>" + "your guesses so far: " + previous + "</p>" 
+document.getElementById("game").innerHTML = psychic
+}
